@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Spinner from "@/components/Spinner";
 import "tailwindcss/tailwind.css";
-import { CornerRightDown, Link2, X } from "lucide-react";
+import { Copy, CornerRightDown, Link2, X } from "lucide-react";
+import { copyToClipboard } from "@/lib/utils";
 
 const themes = {
   blue: "bg-blue-500 hover:bg-blue-600",
@@ -101,7 +102,7 @@ export default function Home() {
 
         {shortUrl && (
           <div className="mt-4 text-center py-4">
-            <div className="text-center flex item-center pb-2"> url has been shorted <CornerRightDown size={20} /> </div>
+            <div className="text-center flex items-center pb-2">URL has been shortened <CornerRightDown size={20} /></div>
             <a
               href={shortUrl}
               target="_blank"
@@ -110,6 +111,12 @@ export default function Home() {
             >
               {shortUrl}
             </a>
+            <button
+              onClick={copyToClipboard(shortUrl)}
+              className={`flex item-center mt-2 font-bold w-full block p-2 rounded text-white text-center ${themes[theme]}`}
+            >
+              Copy URL <Copy className="pl-2" />
+            </button>
           </div>
         )}
 
