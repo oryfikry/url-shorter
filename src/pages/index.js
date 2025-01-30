@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Spinner from "@/components/Spinner";
 import "tailwindcss/tailwind.css";
-import { Link2, X } from "lucide-react";
+import { CornerRightDown, Link2, X } from "lucide-react";
 
 const themes = {
   blue: "bg-blue-500 hover:bg-blue-600",
@@ -16,6 +16,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [theme, setTheme] = useState("blue");
+  const removeUrl = ()=>{
+    setOriginalUrl("")
+    setShortUrl("")
+  }
 
   const generateShortUrl = async () => {
     setIsLoading(true);
@@ -50,7 +54,7 @@ export default function Home() {
         <select
           value={theme}
           onChange={(e) => setTheme(e.target.value)}
-          className="p-2 border rounded shadow"
+          className="p-2 border text-${theme}-500 rounded shadow"
         >
           {Object.keys(themes).map((key) => (
             <option key={key} value={key}>
@@ -79,7 +83,7 @@ export default function Home() {
           {originalUrl && (
             <button
               style={{ transform: "translateY(-75%)" }}
-              onClick={() => setOriginalUrl("")}
+              onClick={() => removeUrl()}
               className="absolute right-2 top-2/4 bg-gray-200 hover:bg-gray-300 text-gray-600 p-1 rounded-full"
             >
               <X size={18} />
@@ -96,7 +100,8 @@ export default function Home() {
         </button>
 
         {shortUrl && (
-          <div className="mt-4 text-center">
+          <div className="mt-4 text-center py-4">
+            <div className="text-center flex item-center pb-2"> url has been shorted <CornerRightDown size={20} /> </div>
             <a
               href={shortUrl}
               target="_blank"
@@ -109,6 +114,7 @@ export default function Home() {
         )}
 
         {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
+        <div className="mt-4 text-white-500 text-center pt-6">Created by oryfikry</div>
       </div>
     </div>
   );
